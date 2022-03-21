@@ -1,0 +1,93 @@
+<svg>
+  <symbol id="tile-train" focusable="false" pointer-events="visible"system-events="all">
+    <rect id="train-background" height="100%" />
+
+    <!-- line1: destination of the train -->
+    <text id="destination" class= "train-destination-text" >station long name cut</text>
+
+    <!-- line 2: time in minutes, platform and bike or no bike icon -->
+    <text id="minutes" class = "minutes-text">42 minutes</text>
+    <!--text id="platform" x="100%-120" y="78" font-size="30" fill="grey">X</text -->
+
+    <!--use id="train-status-light" class = "status-light" href="#static-image">
+      <set href="image" attributeName="href" to=""/>
+    </use-->
+    <circle id="train-status-light" cx="100%-40" cy="50%" r="15" fill="red" />
+    <rect id="tile-divider-bottom" height="2" />
+  </symbol>
+  
+  <text id="status-text" class="status" height = "10%" fill = "white" >status message to be displayed here</text>
+
+  <use id="trainList"  href="#tile-list">
+    <var id="virtual" value="1" />
+    <var id="reorder-enabled" value="0"/>
+    <var id="peek-enabled" value="0"/>
+    <var id="separator-height-bottom" value="2" />
+
+    <use id="my-header-pool" href="#tile-list-pool">
+      <use id="my-header-pool[0]" href="#my-header-item" />
+      <use id="my-header-pool[1]" href="#my-header-item" />
+      <use id="my-header-pool[2]" href="#my-header-item" />
+      <use id="my-header-pool[3]" href="#my-header-item" />
+      <use id="my-header-pool[4]" href="#my-header-item" />
+      <use id="my-header-pool[5]" href="#my-header-item" />
+      <use id="my-header-pool[6]" href="#my-header-item" />
+      <use id="my-header-pool[7]" href="#my-header-item" />
+      <use id="my-header-pool[8]" href="#my-header-item" />
+      <use id="my-header-pool[9]" href="#my-header-item" />
+      <use id="my-header-pool[10]" href="#my-header-item" />
+      <use id="my-header-pool[11]" href="#my-header-item" />
+      <use id="my-header-pool[12]" href="#my-header-item" />
+      <use id="my-header-pool[13]" href="#my-header-item" />
+      <use id="my-header-pool[14]" href="#my-header-item" />
+    </use>
+    
+    <use id="my-pool" href="#tile-list-pool">
+      <use id="my-pool[0]" href="#my-item" >
+        <use href="#tile-train" />  
+      </use>
+      <use id="my-pool[1]" href="#my-item" >
+        <use href="#tile-train" />
+      </use>
+      <use id="my-pool[2]" href="#my-item" >
+        <use href="#tile-train" />
+      </use>
+      <use id="my-pool[3]" href="#my-item" >
+        <use href="#tile-train" />
+      </use>
+      <use id="my-pool[4]" href="#my-item" >
+        <use href="#tile-train" />
+      </use>
+      <use id="my-pool[5]" href="#my-item" >
+        <use href="#tile-train" />
+      </use>
+      <use id="my-pool[6]" href="#my-item" >
+        <use href="#tile-train" />
+      </use>
+      <use id="my-pool[7]" href="#my-item" >
+        <use href="#tile-train" />
+      </use>
+      <use id="my-pool[8]" href="#my-item" >
+        <use href="#tile-train" />
+      </use>
+      <use id="my-pool[9]" href="#my-item" >
+        <use href="#tile-train" />
+      </use>
+      <use id="my-pool[10]" href="#my-item" >
+        <use href="#tile-train" />
+      </use>
+      <use id="my-pool[11]" href="#my-item" >
+        <use href="#tile-train" />
+      </use>
+      <use id="my-pool[12]" href="#my-item" >
+        <use href="#tile-train" />
+      </use>
+      <use id="my-pool[13]" href="#my-item" >
+        <use href="#tile-train" />
+      </use>
+      <use id="my-pool[14]" href="#my-item" >
+        <use href="#tile-train" />
+      </use>
+    </use>
+  </use>
+</svg>
