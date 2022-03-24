@@ -18,10 +18,6 @@ NJPathAPI.prototype.realTimeDepartures = function(origin) {
           let currTime = Date.now();
           let timeDiff = projTime - currTime
           let timeDiffMin = Math.round(((timeDiff % 86400000) % 3600000) / 60000);
-          //console.log("projected time: " + projTime );
-          //console.log("current time: " + Date.now() );
-          //console.log("ETA: "+ timeDiff );
-          //console.log("ETA mins: "+ timeDiffMin)
           let d = {
             "route": destination["route"],
             "name" : destination["lineName"],
@@ -32,6 +28,29 @@ NJPathAPI.prototype.realTimeDepartures = function(origin) {
           departures.push(d);
       });
       resolve(departures);
+    }).catch(function (error) {
+      reject(error);
+    });
+  });
+}
+
+NJPathAPI.prototype.stations = function() {
+  let self = this;
+  return new Promise(function(resolve, reject) {
+    let url = self.stations_url
+    fetch(url).then(function(response) {
+      return response.json();
+    }).then(function(json) {
+      let data = json["stations"];
+      let stations = [];
+      data.forEach( (station) => {
+          let s = {
+            "station": station["station"],
+            "name" : station["name"],
+          };
+          stations.push(s);
+      });
+      resolve(stations);
     }).catch(function (error) {
       reject(error);
     });

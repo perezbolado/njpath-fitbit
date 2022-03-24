@@ -3,6 +3,7 @@ import document from "document";
 export function NJPathUI() {
   this.trainList = document.getElementById("trainList");
   this.statusText = document.getElementById("status-text");
+  this.stationList = document.getElementById("stationList")
   this.stautsLightMap = {
     "ON_TIME" : "green",
     "ARRIVING_NOW" : "green",
@@ -10,11 +11,18 @@ export function NJPathUI() {
   }
 }
 
-NJPathUI.prototype.updateUI = function(state, departures) {
+NJPathUI.prototype.updateUI = function(state, data) {
   if (state === "loaded") {
     this.trainList.style.display = "inline";
     this.statusText.text = "";
-    this.updateDepartureList(departures);
+    if( data.query === 'getSchedule' )
+      this.updateDepartureList(data.departures);
+    else if(data.query === 'getStations'){
+      this.updateStationsList(data.stations);
+    }
+    else{
+      console.log( "No actions defined for "+data.query )
+    }
   }
   else {
     this.trainList.style.display = "none";
@@ -31,7 +39,6 @@ NJPathUI.prototype.updateUI = function(state, departures) {
 }
 
 NJPathUI.prototype.updateDepartureList = function(departures) {
-  
   this.trainList.delegate = {
     getTileInfo: (index) => {
       const poolType = (departures[index].type === "header") ? "my-header-pool" : "my-pool";
@@ -58,7 +65,32 @@ NJPathUI.prototype.updateDepartureList = function(departures) {
       }
     }
   };
+
   this.trainList.length = departures.length
+}
+
+
+NJPathUI.prototype.updateStationsList = function(stations) {
+  this.stationList.delegate = {
+    getTileInfo: (index) => {
+       return {
+        type: "station-pool",
+        value: "",
+        index: index
+      };
+    },
+    configureTile: (tile, info) => {
+      if (info.type == "station-pool") {
+        tile.getElementById("station").text = `${stations[info.index]['name']}`;
+        let touch = tile.getElementById("touch");
+          touch.onclick = function(evt) {
+          console.log(`touched: ${info.index}`);
+        };
+      }
+    }
+  };
+  
+  this.stationList.length = stations.length
 }
 
 

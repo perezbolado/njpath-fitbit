@@ -1,0 +1,63 @@
+<svg id='main-view' display="none">
+    <text id="status-text" class="status" height = "10%" fill = "white" >status message to be displayed here</text>
+ 
+    <symbol id="tile-station" focusable="false" pointer-events="visible"system-events="all">
+      <rect id="train-background" height="100%" />
+      <text id="station" class= "train-station-text" >station long name cut</text>
+    </symbol>
+    
+    <use id="stationList"  href="#tile-list">
+      <var id="virtual" value="1" />
+      <var id="reorder-enabled" value="0"/>
+      <var id="peek-enabled" value="0"/>
+      <var id="separator-height-bottom" value="2" />
+      
+      <use id="station-pool" href="#tile-list-pool">
+        <use id="station-pool[0]" href="#my-item" >
+          <use href="#tile-station" />  
+        </use>
+        <use id="station-pool[1]" href="#my-item" >
+          <use href="#tile-station" />  
+        </use>
+        <use id="station-pool[2]" href="#my-item" >
+          <use href="#tile-station" />  
+        </use>
+        <use id="station-pool[3]" href="#my-item" >
+          <use href="#tile-station" />  
+        </use>
+        <use id="station-pool[4]" href="#my-item" >
+          <use href="#tile-station" />  
+        </use>
+        <use id="station-pool[5]" href="#my-item" >
+          <use href="#tile-station" />  
+        </use>
+        <use id="station-pool[6]" href="#my-item" >
+          <use href="#tile-station" />  
+        </use>
+        <use id="station-pool[7]" href="#my-item" >
+          <use href="#tile-station" />  
+        </use>
+        <use id="station-pool[8]" href="#my-item" >
+          <use href="#tile-station" />  
+        </use>
+        <use id="station-pool[9]" href="#my-item" >
+          <use href="#tile-station" />  
+        </use>
+        <use id="station-pool[10]" href="#my-item" >
+          <use href="#tile-station" />  
+        </use>
+        <use id="station-pool[11]" href="#my-item" >
+          <use href="#tile-station" />  
+        </use>
+        <use id="station-pool[12]" href="#my-item" >
+          <use href="#tile-station" />  
+        </use>
+        <use id="station-pool[13]" href="#my-item" >
+          <use href="#tile-station" />  
+        </use>
+        <use id="station-pool[14]" href="#my-item" >
+          <use href="#tile-station" />  
+        </use>
+      </use>
+    </use>
+  </svg>
