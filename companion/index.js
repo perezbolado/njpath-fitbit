@@ -3,6 +3,8 @@ import { NJPathAPI } from "./api.js"
 
 let api = new NJPathAPI();
 
+let cache = {}
+
 // Listen for the onopen event
 messaging.peerSocket.onopen = function() {
   console.log('peer socket is open')
@@ -21,13 +23,18 @@ function apiRequest(request,parameters) {
       if (messaging.peerSocket.readyState === messaging.peerSocket.OPEN) {
         let response = JSON.stringify({ 'query' : 'getStations', 'stations' : locations});
         console.log('companion sending: ' + response)
+        cache['stations'] = response
         messaging.peerSocket.send(response);
       }
     }).catch(function (e) {
       console.log(e.message);
+      if('stations' in cache){
+        console.log("will send cached data");
+        messaging.peerSocket.send(cache['stations']);
+      }
     });
   }else if(request === 'getSchedule'){
-    api.realTimeDepartures(parameters.origin).then(function(departures) {
+    api.realTimeDepartures(parameters.origin, cache).then(function(departures) {
       if (messaging.peerSocket.readyState === messaging.peerSocket.OPEN) {
         let response = JSON.stringify({ 'query' : 'getSchedule', 'departures' : departures });
         console.log('companion sending: ' + response)

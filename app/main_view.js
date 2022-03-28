@@ -1,49 +1,34 @@
 
-import { View, $at } from './view'
-import { NJPathUI } from "./ui.js";
+import { Application, View, $at } from './view'
 import * as messaging from "messaging";
 
 // Create the root selector for the view...
 const $ = $at( '#main-view' );
 
 export class MainView extends View {
-    // Specify the root view element.
-    // When set, it will be used to show/hide the view on mount and unmount.
     el = $();
-
-    // Ad-hoc $-queries must be avoided.
-    // You've got dumb 120MHz MCU with no JIT in VM, thus everything you do is expensive.
-    // Put all of your elements here, like this:
-
-    // otherEl = $( '#other-el-id' );
-    // elementsArray = $( '.other-el-class' );
-
-    // Lifecycle hook executed on `view.mount()`.
+    stationList = $('#stationList')
+    statusText = $('#status-text')
+    v = this
+ 
     onMount(){
-        // TODO: insert subviews...
-        // TODO: subscribe for events...
-        let ui = new NJPathUI();
-        ui.updateUI("disconnected");
-        var currentView = this;
+        var currentView = this
+        this.statusText.text = "Loading departures ...";
         // Listen for the onopen event
         messaging.peerSocket.onopen = function() {
-            //var payload = JSON.stringify();
-            //console.log('peer conection is open, requesting station data: ' + payload)
             messaging.peerSocket.send({"query" : "getStations", "parameters":{}});
-            ui.updateUI("loading");
         }
 
         // Listen for the message event
         messaging.peerSocket.onmessage = function(evt) {
             var data = JSON.parse(String(evt.data));
-            ui.updateUI("loaded", data);
+            currentView.updateStationsList(data.stations);
             currentView.render();
             
         }
         // Listen for the onerror event
         messaging.peerSocket.onerror = function(err) {
-            // Handle any errors
-            ui.updateUI("error");
+            console.log(err.message)
         }
     }
 
@@ -52,7 +37,7 @@ export class MainView extends View {
         messaging.peerSocket.onopen = null
         messaging.peerSocket.onmessage = null
         messaging.peerSocket.onerror = null
-        currentView = null
+        this.currentView = null
         this.trash = null;
     }
 
@@ -62,4 +47,31 @@ export class MainView extends View {
         console.log("rendering main view");
         //this.render();
     }
+
+    updateStationsList(stations) {
+        this.stationList.style.display = "inline";
+        console.log('lenght: '+stations.length)
+        this.stationList.delegate = {
+          getTileInfo: (index) => {
+             return {
+              type: "station-pool",
+              value: "",
+              index: index
+            };
+          },
+          configureTile: (tile, info) => {
+            if (info.type == "station-pool") {
+              tile.getElementById("station").text = `${stations[info.index]['name']}`;
+              let touch = tile.getElementById("touch");
+                touch.onclick = function(evt) {
+                console.log(`touched: ${info.index}`);
+                Application.switchTo( "StationView", {"origin":stations[info.index]['station']} );
+              };
+            }
+          }
+        }
+        this.stationList.length = stations.length
+    }
+
 }
+

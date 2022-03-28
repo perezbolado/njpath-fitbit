@@ -85,7 +85,12 @@ function unmount(view) {
 
 export class View {
   constructor(options) {
-    if (options) this.options = options;
+    console.log("created new view");
+    
+    if (options){
+      console.log("view has options");
+      this.options = options;
+    }
   }
 
   insert(subview) {
@@ -126,9 +131,9 @@ export class Application extends View {
   }
 
   // Switch the screen
-  static switchTo(screenName) {
+  static switchTo(screenName, options) {
     const { instance } = Application;
-    instance.setScreen(new instance.screens[screenName]());
+    instance.setScreen(new instance.screens[screenName](options));
   }
 
   static start(screen) {
