@@ -15,16 +15,29 @@ export class MainView extends View {
         var currentView = this
         this.statusText.text = "Loading departures ...";
         // Listen for the onopen event
+
         messaging.peerSocket.onopen = function() {
-            messaging.peerSocket.send({"query" : "getStations", "parameters":{}});
+            messaging.peerSocket.send({"query" : "initialize", "parameters":{}});
+            //messaging.peerSocket.send({"query" : "getStations", "parameters":{}});
         }
 
         // Listen for the message event
         messaging.peerSocket.onmessage = function(evt) {
-            var data = JSON.parse(String(evt.data));
-            currentView.updateStationsList(data.stations);
-            currentView.render();
-            
+            try {
+              if(typeof evt.data != 'undefined'){
+                var data = JSON.parse(String(evt.data));
+                if (data.query === "initialize"){
+                  this.statusText.text = "Getting Location...";
+                }
+                else if(data.query === "getStations"){
+                  currentView.updateStationsList(data.stations);
+                }
+              }
+              currentView.render();
+            } catch (error) {
+              console.log("error parsing message from main view: " + error.message)
+              console.log(`evt: ${evt.data}`)
+            }
         }
         // Listen for the onerror event
         messaging.peerSocket.onerror = function(err) {

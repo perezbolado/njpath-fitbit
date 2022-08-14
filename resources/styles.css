@@ -3,7 +3,8 @@
 }
 .list-item text{
   fill: red;
-  font-weight : bold
+  font-weight : bold;
+  x: 15;
 }
 
 .line {
@@ -31,7 +32,7 @@
 
 .train-destination-text {
   font-size : 25;
-  x : 5;
+  x : 15;
   y : 40;
   fill : white
 }
@@ -44,12 +45,13 @@
 }
 
 .minutes-text{
-  x : 5;
+  x : 15;
   y : 78;
   font-size : 25;
   fill : white
 }
 
 .train-station-text{
-  fill : white
+  fill : white;
+  x: 15;
 }

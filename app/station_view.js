@@ -28,10 +28,11 @@ export class StationView extends View {
 
         // Listen for the message event
         messaging.peerSocket.onmessage = function(evt) {
+          if(typeof evt.data != 'undefined'){
             var data = JSON.parse(String(evt.data));
             currentView.updateDepartureList(data.departures);
             currentView.render();
-            
+          } 
         }
         // Listen for the onerror event
         messaging.peerSocket.onerror = function(err) {
